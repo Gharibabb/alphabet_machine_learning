@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.template import loader
 
 # Assuming data/ is in the root directory of your project
-DATA_DIR = 'data/'
+DATA_DIR = '../data'
 
 ENCODER = bidict({
     'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6,
@@ -61,7 +61,7 @@ def practice_post(request):
         correct = pred_letter 
         letter = choice(list(ENCODER.keys()))
 
-        return render(request, "./templates/practice.html", {'letter': letter, 'correct': correct})
+        return render(request, "practice.html", {'letter': letter, 'correct': correct})
 
     except Exception as e:
         # Logging the exception can be helpful for debugging
