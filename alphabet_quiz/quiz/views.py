@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.template import loader
 
 # Assuming data/ is in the root directory of your project
-DATA_DIR = '../data'
+DATA_DIR = '../'
 
 ENCODER = bidict({
     'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6,
@@ -46,22 +46,20 @@ def add_data_post(request):
     return redirect('add_data_get')
 
 def practice_get(request):
-    letter = choice(list(ENCODER.keys()))
-    return render(request, "practice.html", {'letter': letter, 'correct': ''})
+    
+    return render(request, "practice.html", {'letter': '', 'correct': ''})
 
 def practice_post(request):
+    print ('hello')
     try:
-        letter = request.POST['letter']
+        #letter = request.POST['letter']
         pixels = request.POST['pixels'].split(',')
         img = np.array(pixels).astype(float).reshape(1, 50, 50, 1)
-        model = keras.models.load_model(DATA_DIR + 'letter.model')
+        model = keras.models.load_model('letter.model')
         pred_letter = np.argmax(model.predict(img), axis=-1)
         pred_letter = ENCODER.inverse[pred_letter[0]]
-
-        correct = pred_letter 
-        letter = choice(list(ENCODER.keys()))
-
-        return render(request, "practice.html", {'letter': letter, 'correct': correct})
+        correct =pred_letter 
+        return render(request, "practice.html", {'letter': '', 'correct': correct})
 
     except Exception as e:
         # Logging the exception can be helpful for debugging
