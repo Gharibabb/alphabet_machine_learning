@@ -79,9 +79,7 @@ def practice_post():
         pred_letter = np.argmax(model.predict(img), axis=-1)
         pred_letter = ENCODER.inverse[pred_letter[0]]
 
-        # correct = 'yes' if pred_letter == letter else 'no'
         correct = pred_letter 
-        print(correct)
         letter = choice(list(ENCODER.keys()))
 
         return render_template("practice.html", letter=letter, correct=correct)
